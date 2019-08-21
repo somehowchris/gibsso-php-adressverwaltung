@@ -27,7 +27,7 @@ table.tstacked th {
 }
 
 @media screen and (max-width:700px) {
-	
+
 	table.tstacked, table.tstacked tr, table.tstacked td {
 		padding:0;
 		border:1px solid black;
@@ -68,6 +68,10 @@ table.tstacked th {
                 /* display: inline-block; */
                 /* min-width: 100px; */
 	}
+}
+
+.hidden {
+  display: none!important;
 }
 
 /* End Stacked Table */

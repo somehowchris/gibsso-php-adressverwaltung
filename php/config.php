@@ -8,16 +8,16 @@
 
 // Default-CSS-Klasse zur Formatierung der Eingabefelder
 setValue('cfg_css_class_normal',"");
-// Klasse zur Formatierung der Eingabefelder, falls die Eingabeprüfung negativ ausfällt
+// Klasse zur Formatierung der Eingabefelder, falls die Eingabeprï¿½fung negativ ausfï¿½llt
 setValue('cfg_css_class_error',"is-invalid");
 // Akzeptierte Funktionen
-setValue('cfg_func_list', ["kontakt","liste"]);
+setValue('cfg_func_list', ["kontakt","liste", "ort", "personen", "land"]);
 // Inhalt des Menus
-setValue( 'cfg_menu_list', ["kontakt"=>"Kontaktformular","liste"=>"Erfasste Kontakte"] );
-// Template für Menu
+setValue( 'cfg_menu_list', ["kontakt"=>"Kontaktformular","liste"=>"Erfasste Kontakte", "land" => "Landverwaltung","personen" => "Personenverwaltung", "ort" => "Ortsverwaltung"] );
+// Template fï¿½r Menu
 setValue('cfg_menu', 'templates/menuBar.htm.php');
 
 // Datenbankverbundung herstellen
-$db = mysqli_connect("127.0.0.1", "root", "", "mvcgibs");	// Zu Datenbankserver verbinden		
+$db = mysqli_connect("127.0.0.1", "root", "", "adressverwaltung");	// Zu Datenbankserver verbinden
 setValue('cfg_db', $db);
 ?>

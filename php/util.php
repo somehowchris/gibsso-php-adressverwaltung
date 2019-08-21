@@ -3,39 +3,41 @@
  *  @autor Daniel Mosimann
  *  @version 2.0
  *
- *  Dieses Modul stellt grundlegende Funktionen zur Verfügung und ist damit
+ *  Dieses Modul stellt grundlegende Funktionen zur Verfï¿½gung und ist damit
  *  Bestandteil des MVC-GIBS.
  *
  */
 
 /*
- * Assoziativer, globaler Array für den Transport von Werten zwischen Anwendung und Templates
+ * Assoziativer, globaler Array fï¿½r den Transport von Werten zwischen Anwendung und Templates
  */
 $params = array();
 
 /**
- * Führt ein HTML-Template aus und gibt das Produkt zurück.
+ * Fï¿½hrt ein HTML-Template aus und gibt das Produkt zurï¿½ck.
  *
  * @param     $template     Filename des Templates
- * @param     $params       Assoziativer Array mit Werten, welche im Template eingefügt werden.
+ * @param     $params       Assoziativer Array mit Werten, welche im Template eingefï¿½gt werden.
  *                          key: Name der Variable, value: Wert
  */
-function runTemplate( $template ) {
-	ob_start();
-	include($template);
-	$inhalt=ob_get_contents();
-	ob_end_clean();
-	return $inhalt;
+function runTemplate($template)
+{
+    ob_start();
+    include($template);
+    $inhalt=ob_get_contents();
+    ob_end_clean();
+    return $inhalt;
 }
 
 /*
  * Einen Wert im globalen Array $params speichern.
  *
- * @param       $key        Schlüssel des Wertes (Index im globalen Array
+ * @param       $key        Schlï¿½ssel des Wertes (Index im globalen Array
  * @param       $value      Wert des Wertes
  *
  */
-function setValue( $key, $value ) {
+function setValue($key, $value)
+{
     global $params;
     $params[$key] = $value;
 }
@@ -46,10 +48,11 @@ function setValue( $key, $value ) {
  * @param       $list      Assoziativer Array mit den zu speichernden Werten
  *
  */
-function setValues( $list ) {
+function setValues($list)
+{
     global $params;
-    if ( count($list )) {
-        foreach ($list as $k => $v ) {
+    if (count($list)) {
+        foreach ($list as $k => $v) {
             $params[$k] = $v;
         }
     }
@@ -58,10 +61,11 @@ function setValues( $list ) {
 /*
  * Wert aus dem globalen Array lesen
  *
- * @param       $field      Index des gewünschten Wetes
+ * @param       $field      Index des gewï¿½nschten Wetes
  *
  */
-function getValue( $key ) {
+function getValue($key)
+{
     global $params;
     return $params[$key];
 }
@@ -69,26 +73,30 @@ function getValue( $key ) {
 /*
  * Wert aus dem globalen Array lesen und in HTML-Syntax umwandeln
  *
- * @param       $field      Index des gewünschten Wetes
+ * @param       $field      Index des gewï¿½nschten Wetes
  *
  */
-function getHtmlValue( $key ) {
+function getHtmlValue($key)
+{
     global $params;
     return htmlentities($params[$key]);
 }
 
 /**
  * Menu erstellen und ausgeben (Bootstrap-Stil)
- * 
+ *
  * @param $template HTML-Template
  */
-function menu($mlist, $template) {
+function menu($mlist, $template)
+{
     $printmenu = "";
     $active_link = getValue('func');
-    foreach ( $mlist as $element => $option ) {
-        if ( !empty($option) ) {
+    foreach ($mlist as $element => $option) {
+        if (!empty($option)) {
             $active = "";
-            if ( $element == $active_link) $active = "active";    
+            if ($element == $active_link) {
+                $active = "active";
+            }
             $printmenu .= "<li class=\"nav-item\"><a class=\"nav-link $active\" href=\"".$_SERVER['PHP_SELF']."?id=".$element."\">".$option."</a></li>";
         }
     }
@@ -96,26 +104,34 @@ function menu($mlist, $template) {
 }
 
 /**
- * Übergebene SQL-Anweisung auf der DB ausführen und Resultat zurückgeben.
+ * ï¿½bergebene SQL-Anweisung auf der DB ausfï¿½hren und Resultat zurï¿½ckgeben.
  *
- * @param   $sql       Select-Befehl, welcher ausgeführt werden soll
+ * @param   $sql       Select-Befehl, welcher ausgefï¿½hrt werden soll
  */
-function sqlSelect($sql) {
- 	$result = mysqli_query(getValue('cfg_db'), $sql);
- 	if ( !$result ) die("Fehler: ".mysqli_error(getValue(cfg_db)));
-        $data = array();
- 	while ( $row=mysqli_fetch_assoc($result) ) $data[]=$row;
-	return $data;
+function sqlSelect($sql)
+{
+    $result = mysqli_query(getValue('cfg_db'), $sql);
+    if (!$result) {
+        die("Fehler: ".mysqli_error(getValue(cfg_db)));
+    }
+    $data = array();
+    while ($row=mysqli_fetch_assoc($result)) {
+        $data[]=$row;
+    }
+    return $data;
 }
 
 /**
- * Führt einen SQL-Befehl aus.
+ * Fï¿½hrt einen SQL-Befehl aus.
  *
- * @param   $sql    SQL-Befehl, welcher ausgeführt werden soll
+ * @param   $sql    SQL-Befehl, welcher ausgefï¿½hrt werden soll
  */
-function sqlQuery($sql) {
- 	$result = mysqli_query(getValue('cfg_db'), $sql);
- 	if ( !$result ) die(mysqli_error(getValue(cfg_db))."<pre>".$sql."</pre>");
+function sqlQuery($sql)
+{
+    $result = mysqli_query(getValue('cfg_db'), $sql);
+    if (!$result) {
+        die(mysqli_error(getValue(cfg_db))."<pre>".$sql."</pre>");
+    }
 }
 
 /**
@@ -123,110 +139,164 @@ function sqlQuery($sql) {
  *
  * @param   $id     ID der Funktion, welche aufgerufen werden soll
  */
-function redirect( $id="" ) {
-    if (!empty($id)) $id="?id=$id";
+function redirect($id="")
+{
+    if (!empty($id)) {
+        $id="?id=$id";
+    }
     header("Location: ".$_SERVER['PHP_SELF'].$id);
     exit();
 }
 
 /**
- * Prüft ob ein Eingabewert leer ist oder nicht.
+ * Prï¿½ft ob ein Eingabewert leer ist oder nicht.
  *
  * @param   $value      Eingabewert
- * @param   $maxlength  Minimale Länge der Eingabe
+ * @param   $maxlength  Minimale Lï¿½nge der Eingabe
  */
-function CheckEmpty( $value, $minlength=Null ) {
-    if (empty($value)) return false;
-    if ( $minlength != Null && strlen($value) < $minlength ) return false;
-    else return true;
+function CheckEmpty($value, $minlength=null)
+{
+    if (empty($value)) {
+        return false;
+    }
+    if ($minlength != null && strlen($value) < $minlength) {
+        return false;
+    } else {
+        return true;
+    }
 }
 
 /**
- * Prüft ob eine Emailadresse korrekt ist oder nicht.
+ * Prï¿½ft ob eine Emailadresse korrekt ist oder nicht.
  *
  * @param   $value      Eingabewert
  * @param   $empty      Die Email-Adresse kann leer sein ('Y') oder nicht ('N')
  */
-function CheckEmail( $value, $empty='N' ) {
+function CheckEmail($value, $empty='N')
+{
     $pattern_email = '/^[^@\s<&>]+@([-a-z0-9]+\.)+[a-z]{2,}$/i';
-    if ($empty=='Y' && empty($value)) return true;
-    if ( preg_match($pattern_email, $value) ) return true;
-    else return false;
+    if ($empty=='Y' && empty($value)) {
+        return true;
+    }
+    if (preg_match($pattern_email, $value)) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 /**
- * Prüft ob eine Name (Nachname, Vorname) korrekt ist oder nicht.
- * Erlaubt sind die Zeichen in den eckigen Klammern, mit einer Länge
+ * Prï¿½ft ob eine Name (Nachname, Vorname) korrekt ist oder nicht.
+ * Erlaubt sind die Zeichen in den eckigen Klammern, mit einer Lï¿½nge
  * von mindestens 2 Zeichen.
  *
  * @param   $value      Eingabewert
  * @param   $empty      Der Name kann leer sein ('Y') oder nicht ('N')
  */
-function CheckName( $value, $empty='N' ) {
-    $pattern_name = '/^[a-zA-ZäöüÄÖÜ \-]{2,}$/';
-    if ($empty=='Y' && empty($value)) return true;
-    if ( preg_match($pattern_name, $value) ) return true;
-    else return false;
+function CheckName($value, $empty='N')
+{
+    $pattern_name = '/^[a-zA-Zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ \-]{2,}$/';
+    if ($empty=='Y' && empty($value)) {
+        return true;
+    }
+    if (preg_match($pattern_name, $value)) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 /**
- * Prüft ob eine Ort korrekt ist oder nicht.
+ * Prï¿½ft ob eine Ort korrekt ist oder nicht.
  *
  * @param   $value      Eingabewert
  * @param   $empty      Der Ort kann leer sein ('Y') oder nicht ('N')
  */
-function CheckOrt( $value, $empty='N' ) {
-    $pattern_ort = '/^[a-zA-ZäöüÄÖÜ \-]{2,}$/';
-    if ($empty=='Y' && empty($value)) return true;
-    if (empty($value)) return false;
-    if ( preg_match($pattern_ort, $value) ) return true;
-    else return false;
+function CheckOrt($value, $empty='N')
+{
+    $pattern_ort = '/^[a-zA-Zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ \-]{2,}$/';
+    if ($empty=='Y' && empty($value)) {
+        return true;
+    }
+    if (empty($value)) {
+        return false;
+    }
+    if (preg_match($pattern_ort, $value)) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 /**
- * Prüft ob es sich beim übergebenen Wert um eine Zahl handelt.
+ * Prï¿½ft ob es sich beim ï¿½bergebenen Wert um eine Zahl handelt.
  *
- * @param   $value      Übergebender Wert
+ * @param   $value      ï¿½bergebender Wert
  */
-function isNumber( $value ) {
-    if ( !is_numeric($value) ) return false;
+function isNumber($value)
+{
+    if (!is_numeric($value)) {
+        return false;
+    }
     return true;
 }
 
 /**
- * Prüft ob ein Eingabewert eine Zahl ist.
+ * Prï¿½ft ob ein Eingabewert eine Zahl ist.
  *
  * @param   $value         Eingabewert
- * @param   $minlength     Minimale Länge der Zahl
+ * @param   $minlength     Minimale Lï¿½nge der Zahl
  */
-function CheckNumber( $value ) {
-    if ( !isNumber($value) ) return false;
-    else return true;
+function CheckNumber($value)
+{
+    if (!isNumber($value)) {
+        return false;
+    } else {
+        return true;
+    }
 }
 
 /**
- * Prüft ob es sich beim übergebenen Wert um eine positive Ganzzahl handelt (ohne e,+,-).
+ * Prï¿½ft ob es sich beim ï¿½bergebenen Wert um eine positive Ganzzahl handelt (ohne e,+,-).
  *
- * @param   $value      Übergebender Wert
+ * @param   $value      ï¿½bergebender Wert
  */
-function isCleanNumber( $value ) {
-    if ( !is_numeric($value) ) return false;
+function isCleanNumber($value)
+{
+    if (!is_numeric($value)) {
+        return false;
+    }
     $pattern_number = '/^[0-9]*$/';
-    if ( preg_match($pattern_number, $value) ) return true;
-    else return false;
+    if (preg_match($pattern_number, $value)) {
+        return true;
+    } else {
+        return false;
+    }
     return true;
 }
 
 /**
- * Prüft ob ein Eingabewert eine Zahl ist. Eine Leereingabe ist erlaubt.
+ * Prï¿½ft ob ein Eingabewert eine Zahl ist. Eine Leereingabe ist erlaubt.
  *
  * @param   $value         Eingabewert
- * @param   $minlength     Minimale Länge der Zahl
+ * @param   $minlength     Minimale Lï¿½nge der Zahl
  */
-function CheckCleanNumberEmpty( $value, $minlength=0) {
-    if ( empty($value) ) return true;
-    if ( !isCleanNumber($value) || strlen($value) < $minlength ) return false;
-    else return true;
+function CheckCleanNumberEmpty($value, $minlength=0)
+{
+    if (empty($value)) {
+        return true;
+    }
+    if (!isCleanNumber($value) || strlen($value) < $minlength) {
+        return false;
+    } else {
+        return true;
+    }
 }
 
-?>
+function getParameter(String $name)
+{
+    if (isset($_REQUEST[$name])) {
+        return htmlspecialchars($_REQUEST[$name]);
+    }
+    return null;
+}
