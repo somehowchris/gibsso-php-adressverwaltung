@@ -139,12 +139,16 @@ function sqlQuery($sql)
  *
  * @param   $id     ID der Funktion, welche aufgerufen werden soll
  */
-function redirect($id="")
+function redirect($id="", $func = true)
 {
-    if (!empty($id)) {
-        $id="?id=$id";
+    if ($func === true) {
+        if (!empty($id)) {
+            $id="?id=$id";
+        }
+        header("Location: ".$_SERVER['PHP_SELF'].$id);
+    } else {
+        header("Location: ".$id);
     }
-    header("Location: ".$_SERVER['PHP_SELF'].$id);
     exit();
 }
 

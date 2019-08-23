@@ -13,19 +13,11 @@
         -->
     </div>
   </div>
-  <div class="row">
-    <div class="col-3">
-      <input class="btn btn-outline-secondary" type="submit" name="search" value="Suchen">
-    </div>
-    <div class="col-3">
-      <input class="btn btn-outline-secondary" type="submit" name="new" value="Neu">
-    </div>
-    <div class="col-3">
-      <input class="btn btn-outline-secondary" type="submit" name="save" value="Speichern">
-    </div>
-    <div class="col-3">
-      <input class="btn btn-outline-secondary" type="submit" name="delete" value="Löschen">
-    </div>
+  <div class="row ml-md-1">
+    <input class="btn btn-outline-secondary mr-md-3" type="submit" name="search" value="Suchen">
+    <input class="btn btn-outline-secondary mr-md-3" type="submit" name="new" value="Neu">
+    <input class="btn btn-outline-secondary mr-md-3" type="submit" name="save" value="Speichern">
+    <input class="btn btn-outline-secondary mr-md-3" type="submit" name="delete" value="Löschen" <?= getValue('selected') !== null ? '' : 'disabled' ?>>
   </div>
 </form>
 

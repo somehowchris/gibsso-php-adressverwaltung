@@ -108,6 +108,11 @@ function ort()
     return runTemplate("templates/ort.htm.php");
 }
 
+function create_ort()
+{
+    return runTemplate("templates/ort_edit.htm.php");
+}
+
 function land()
 {
     $lid = getParameter('slid');
@@ -130,13 +135,13 @@ function land()
                 if ($lid !== null) {
                     db_update_land($lid, stripslashes(getParameter('search_input')));
                     unset($_REQUEST['search_input']);
+                    redirect(getValue('phpmodule'), false);
+                } else {
+                    db_insert_land(stripslashes(getParameter('search_input')));
+                    unset($_REQUEST['search_input']);
                     unset($_REQUEST['slid']);
                     redirect(__FUNCTION__);
                 }
-                db_insert_land(stripslashes(getParameter('search_input')));
-                unset($_REQUEST['search_input']);
-                unset($_REQUEST['slid']);
-                redirect(__FUNCTION__);
             }
             // TODO invalid message
         }

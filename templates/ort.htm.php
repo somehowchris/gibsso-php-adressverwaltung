@@ -1,42 +1,10 @@
-<form name="land"
-  action="<?php echo getValue('phpmodule')?>"
-  method="post">
-  <div class="form-group row">
-    <label for="plz" class="col-sm-2 col-form-label">Plz</label>
-    <div class="col-sm-10">
-      <input placeholder="Plz"
-        class="form-control <?php echo getCssClass('invalid_input')?>"
-        type="number" id="plz" name="plz"
-        value="<?php echo getParameter('plz')?>">
-      <!--
-          TODO invalid input
-        -->
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="ort" class="col-sm-2 col-form-label">Ort(*)</label>
-    <div class="col-sm-10">
-      <input placeholder="Ort"
-        class="form-control <?php echo getCssClass('invalid_input')?>"
-        type="text" id="ort" name="ort"
-        value="<?php echo getParameter('ort')?>">
-      <!--
-          TODO invalid input
-        -->
-    </div>
-  </div>
-  <div class="row">
-    <input class="btn btn-outline-secondary" type="submit" name="search" value="Suchen">
-    <input class="btn btn-outline-secondary" type="submit" name="new" value="Neu">
-    <input class="btn btn-outline-secondary" type="submit" name="save" value="Speichern">
-    <input class="btn btn-outline-secondary" type="submit" name="delete" value="Löschen">
-  </div>
-</form>
-
 <div class="row">
   <div class="col-2">
-    <button class="btn btn-outline-secondary">Neu</button>
+    <a class="btn btn-outline-secondary" name="new"
+      href="<?= $_REQUEST['SCRIPT_NAME']."?id=create_ort"?>">Neu</a>
   </div>
+</div>
+<div class="mb-md-3">
 </div>
 <table id="ortTable"
   class="table table-bordered table-hover <?= count(getValue('data')) > 0 ? '' : 'hidden'?>">
