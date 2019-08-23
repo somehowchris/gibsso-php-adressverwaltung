@@ -108,9 +108,49 @@ function ort()
     return runTemplate("templates/ort.htm.php");
 }
 
+function edit_ort($origin='')
+{
+    $oid = getParameter('soid');
+    if ($oid !== null) {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            setValue('phpmodule', $_SERVER['SCRIPT_NAME']."?id=".__FUNCTION__. ($oid !== null ? "&soid=".$oid : ""));
+            $search = db_select_ort($ort);
+            if (count($search) === 0) {
+                // TODO invalid id message
+            }
+            setValue('selected', $search[0]);
+        } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (getParameter('save') !== null) {
+                $name = getParameter('ort');
+                $plz = getParameter('plz');
+                if (isNumber($plz)) {
+                    db_update_ort($oid, $name, $plz);
+                    redirect(ort);
+                }
+                // TODO invalid input
+            } elseif (getParameter('delete') !== null) {
+                db_delete_ort($oid);
+                redirect(ort);
+            }
+        }
+    } else {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $name = getParameter('ort');
+            $plz = getParameter('plz');
+            if (isNumber($plz)) {
+                db_insert_ort($name, $plz);
+                redirect(ort);
+            }
+            // TODO invalid message
+        }
+        setValue('phpmodule', $_SERVER['SCRIPT_NAME']."?id=".$origin. ($oid !== null ? "&soid=".$oid : ""));
+    }
+    return runTemplate("templates/ort_edit.htm.php");
+}
+
 function create_ort()
 {
-    return runTemplate("templates/ort_edit.htm.php");
+    return edit_ort(__FUNCTION__);
 }
 
 function land()

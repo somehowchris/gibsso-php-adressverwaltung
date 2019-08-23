@@ -19,7 +19,7 @@
   <tbody>
     <?php
       foreach (getValue('data') as $ort) {
-          echo "<tr>
+          echo "<tr onClick='selectOrt(".$ort['oid'].")'>
                 <td>
                   ".$ort['plz']."
                 </td>
@@ -41,4 +41,15 @@
       }
     });
   });
+</script>
+
+
+<script language="javascript">
+  function selectOrt(oid) {
+    const currentLocation =
+      "<?= $_REQUEST['SCRIPT_NAME'].'?id=edit_ort'?>";
+    var urlParams = new URLSearchParams(window.location.search);
+    window.location.href = !urlParams.has('soid') ? `${currentLocation}&soid=${oid}` :
+      currentLocation.replace(`soid=${urlParams.get('soid')}`, `soid=${oid}`);
+  }
 </script>

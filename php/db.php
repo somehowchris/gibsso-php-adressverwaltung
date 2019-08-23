@@ -24,9 +24,21 @@ function db_insert_land($name)
     sqlQuery($sql);
 }
 
+function db_insert_ort($name, $plz)
+{
+    $sql = "INSERT INTO ort (ort, plz) VALUES ('$name', $plz)";
+    sqlQuery($sql);
+}
+
 function db_update_land($lid, $name)
 {
     $sql = "UPDATE land SET land = '$name' WHERE lid = ".$lid;
+    sqlQuery($sql);
+}
+
+function db_update_ort($oid, $name, $plz)
+{
+    $sql = "UPDATE ort SET ort = '$name', plz = $plz WHERE oid = ".$oid;
     sqlQuery($sql);
 }
 
@@ -40,9 +52,9 @@ function db_select_land()
     return sqlSelect("select * from land");
 }
 
-function db_select_ort()
+function db_select_ort($oid = null)
 {
-    return sqlSelect("select * from ort");
+    return sqlSelect("select * from ort" . (isset($oid) ? " WHERE oid = $oid" : ''));
 }
 
 function db_query_land($query)

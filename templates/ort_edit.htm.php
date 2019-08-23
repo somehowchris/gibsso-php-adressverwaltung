@@ -6,8 +6,8 @@
     <div class="col-sm-10">
       <input placeholder="Plz"
         class="form-control <?php echo getCssClass('invalid_input')?>"
-        type="number" id="plz" name="plz"
-        value="<?php echo getParameter('plz')?>">
+        type="number" id="plz" name="plz" min="1000"
+        value="<?= getParameter('plz') != null ? getParameter('plz') : getValue('selected') !== null ? getValue('selected')['plz'] : ''?>">
       <!--
           TODO invalid input
         -->
@@ -18,16 +18,17 @@
     <div class="col-sm-10">
       <input placeholder="Ort"
         class="form-control <?php echo getCssClass('invalid_input')?>"
-        type="text" id="ort" name="ort"
-        value="<?php echo getParameter('ort')?>">
+        required minlength="2" type="text" id="ort" name="ort"
+        value="<?= getParameter('ort') != null ? getParameter('ort') : getValue('selected') !== null ? getValue('selected')['ort'] : ''?>">
       <!--
-          TODO invalid input
+          // TODO invalid input
         -->
     </div>
   </div>
   <div class="row">
     <input class="btn btn-outline-secondary mr-md-3" type="submit" name="save" value="Speichern">
-    <input class="btn btn-outline-secondary mr-md-3" type="submit" name="delete" value="Löschen">
-    <input class="btn btn-outline-secondary mr-md-3" type="submit" name="new" value="Abbrechen">
+    <input class="btn btn-outline-secondary mr-md-3" type="submit" name="delete" value="Löschen" <?= getValue('selected') !== null ? '' : 'disabled' ?>>
+    <a class="btn btn-outline-secondary mr-md-3" name="new"
+      href="<?= $_REQUEST['SCRIPT_NAME'].'?id=ort'?>">Abbrechen</a>
   </div>
 </form>
