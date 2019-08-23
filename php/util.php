@@ -90,7 +90,7 @@ function getHtmlValue($key)
 function menu($mlist, $template)
 {
     $printmenu = "";
-    $active_link = getValue('func');
+    $active_link = array_key_exists(getValue('func'), getValue('cfg_menu_list'))  == true ? getValue('func') : (array_key_exists(getValue('func'), getValue('cfb_sub_tabs')) ? getValue('cfb_sub_tabs')[getValue('func')] : null);
     foreach ($mlist as $element => $option) {
         if (!empty($option)) {
             $active = "";
