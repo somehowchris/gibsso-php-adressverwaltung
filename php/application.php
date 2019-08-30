@@ -36,6 +36,65 @@ function setCssClassInvalid($name)
 
 function personen()
 {
+    include('php/models/Person.php');
+    setValue('data_ort', db_select_ort());
+    setValue('data_land', db_select_land());
+
+    setValue('phpmodule', $_SERVER['SCRIPT_NAME']."?id=".__FUNCTION__);
+
+    $count = db_count_person();
+
+    $pid = getParameter('pid');
+
+
+    $person = new Person();
+    $person->name = getParameter('name');
+    $person->vorname = getParameter('vorname');
+    $person->strasse = getParameter('strasse');
+    $person->ort = getParameter('ort');
+    $person->mail = getParameter('mail');
+    $person->telPriv = getParameter('tel-priv');
+    $person->telComp = getParameter('tel-comp');
+    $person->land = getParameter('land');
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (getParameter('save')) {
+            if ($pid != null) {
+                db_update_person($pid, $person->name, $person->vorname, $person->strasse, $person->ort, $person->mail, $person->telPriv, $person->telComp, $person->land);
+            } else {
+                $pid = db_insert_person($person->name, $person->vorname, $person->strasse, $person->ort, $person->mail, $person->telPriv, $person->telComp, $person->land);
+                redirect($_SERVER['SCRIPT_NAME']."?id=".__FUNCTION__."&pid=".$pid, false);
+            }
+        } elseif (getParameter('new')) {
+            $_SESSION['new'] = true;
+            unset($_SESSION['json_search'], $_REQUEST['name'], $_REQUEST['vorname'], $_REQUEST['strasse'], $_REQUEST['ort'], $_REQUEST['tel-priv'], $_REQUEST['tel-comp'], $_REQUEST['land'], $_REQUEST['pid'], $_REQUEST['mail']);
+            redirect(__FUNCTION__);
+        } elseif (getParameter('delete') && $pid) {
+            db_delete_person($pid);
+            unset($_REQUEST['name'], $_REQUEST['vorname'], $_REQUEST['strasse'], $_REQUEST['ort'], $_REQUEST['tel-priv'], $_REQUEST['tel-comp'], $_REQUEST['land'], $_REQUEST['pid'], $_REQUEST['mail']);
+            redirect(__FUNCTION__);
+        } elseif (getParameter('search')) {
+            $_SESSION['json_search'] = json_encode($person);
+            unset($_REQUEST['name'], $_REQUEST['vorname'], $_REQUEST['strasse'], $_REQUEST['ort'], $_REQUEST['tel-priv'], $_REQUEST['tel-comp'], $_REQUEST['land'], $_REQUEST['pid'], $_REQUEST['mail']);
+            redirect(__FUNCTION__);
+        }
+    }
+    if ($pid ===  null && $count > 0 && $_SERVER['REQUEST_METHOD'] === 'GET' && $_SESSION['new'] !== true) {
+        $pid = db_first_person(json_decode($_SESSION['json_search']));
+        $_REQUEST['pid'] = $pid;
+        redirect($_SERVER['SCRIPT_NAME']."?id=".__FUNCTION__."&pid=".$pid, false);
+    }
+    if ($pid !== null && $count > 0) {
+        setValue('previous', db_previous_person($pid, json_decode($_SESSION['json_search'])));
+        setValue('next', db_next_person($pid, json_decode($_SESSION['json_search'])));
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            setValue('selected', db_select_person($pid));
+        }
+    }
+
+    $_SESSION['new'] = false;
+
+    return runTemplate('templates/person.htm.php');
 }
 
 function ort()

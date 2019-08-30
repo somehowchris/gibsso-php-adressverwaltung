@@ -11,7 +11,7 @@ setValue('cfg_css_class_normal', "");
 // Klasse zur Formatierung der Eingabefelder, falls die Eingabepr�fung negativ ausf�llt
 setValue('cfg_css_class_error', "is-invalid");
 // Akzeptierte Funktionen
-setValue('cfg_func_list', ["ort", "personen", "land", "create_ort", "edit_ort"]);
+setValue('cfg_func_list', ["personen", "ort",  "land", "create_ort", "edit_ort"]);
 // Adding sub tabs to select proper nav
 setValue('cfb_sub_tabs', ["create_ort" => "ort", "edit_ort" => "ort"]);
 // Inhalt des Menus

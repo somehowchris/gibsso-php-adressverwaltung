@@ -304,3 +304,24 @@ function getParameter(String $name)
     }
     return null;
 }
+
+function escapeStringOrNull($param)
+{
+    if ($param === null) {
+        return 'NULL';
+    }
+    return "'".htmlspecialchars($param)."'";
+}
+
+function intOrNull($param)
+{
+    if ($param === null || !isNumber($param)) {
+        return 'NULL';
+    }
+    return $param;
+}
+
+function filterNull($input)
+{
+    return $input != null;
+}

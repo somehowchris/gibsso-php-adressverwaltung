@@ -1,11 +1,11 @@
 <form name="land"
-  action="<?php echo getValue('phpmodule')?>"
+  action="<?= getValue('phpmodule')?>"
   method="post">
   <div class="form-group row">
     <label for="search_input" class="col-sm-2 col-form-label">Land(*)</label>
     <div class="col-sm-10">
       <input placeholder="Search"
-        class="form-control <?php echo getCssClass('invalid_input')?>"
+        class="form-control <?= getCssClass('invalid_input')?>"
         type="text" id="search_input" name="search_input"
         value="<?= getValue('selected') ? getValue('selected')['land'] : getParameter('search_input')?>">
       <!--
@@ -24,7 +24,7 @@
 <script language="javascript">
   function selectLand(lid) {
     const currentLocation =
-      "<?php echo getValue('phpmodule')?>";
+      "<?= getValue('phpmodule')?>";
     var urlParams = new URLSearchParams(window.location.search);
     window.location.href = !urlParams.has('slid') ? `${currentLocation}&slid=${lid}` :
       currentLocation.replace(`slid=${urlParams.get('slid')}`, `slid=${lid}`);

@@ -12,7 +12,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            <?php echo $printmenu?>
+            <?= $printmenu?>
         </ul>
     </div>
 </nav>

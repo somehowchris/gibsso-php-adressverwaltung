@@ -34,7 +34,7 @@
       <?php menu(getValue('cfg_menu_list'), getValue('cfg_menu'));?>
       <div class="row m-3">
         <div class="col-12" style="overflow: auto">
-          <?php echo getValue('inhalt'); ?>
+          <?= getValue('inhalt'); ?>
         </div>
       </div>
     </div>
