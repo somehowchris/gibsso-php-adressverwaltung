@@ -44,8 +44,8 @@ function addPersonFilterWhereStatement($person)
     ($person->telComp ? " tel_gesch = '".$person->telComp."'" : null),
     ($person->telPriv ? " tel_priv = '".$person->telPriv."'" : null),
     ($person->mail ? " email = '".$person->mail."'" : null),
-    ($person->lid ? " lid = ".$person->lid : null),
-    ($person->oid ? " oid = ".$person->oid : null));
+    ($person->land ? " lid = ".$person->land : null),
+    ($person->ort ? " oid = ".$person->ort : null));
 
     $searchItems = array_filter($items, "filterNull");
     $whereStatement = join(" AND ", $searchItems);

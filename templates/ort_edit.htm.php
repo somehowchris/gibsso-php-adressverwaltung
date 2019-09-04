@@ -8,9 +8,9 @@
         class="form-control <?= getCssClass('invalid_input')?>"
         type="number" id="plz" name="plz" min="1000"
         value="<?= getParameter('plz') != null ? getParameter('plz') : (getValue('selected') !== null ? getValue('selected')['plz'] : '')?>">
-      <!--
-          TODO invalid input
-        -->
+      <div
+        class="<?= getValue('errors')['plz'] != null ? 'is-invalid' : 'hidden'?>">
+        Please check your input</div>
     </div>
   </div>
   <div class="form-group row">
@@ -18,11 +18,11 @@
     <div class="col-sm-10">
       <input placeholder="Ort"
         class="form-control <?= getCssClass('invalid_input')?>"
-        required minlength="2" type="text" id="ort" name="ort"
+        minlength="2" type="text" id="ort" name="ort"
         value="<?= getParameter('ort') != null ? getParameter('ort') : (getValue('selected') !== null ? getValue('selected')['ort'] : '')?>">
-      <!--
-          // TODO invalid input
-        -->
+      <div
+        class="<?= getValue('errors')['name'] != null ? 'is-invalid' : 'hidden'?>">
+        Please check your input</div>
     </div>
   </div>
   <div class="row">

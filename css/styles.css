@@ -1,7 +1,9 @@
 /* Bootstrap Navigation */
 .nav-tabs .nav-link { color: #495057}
 .nav-tabs .nav-link.active { color:#dc3545}
-
+.is-invalid{
+  color:#dc3545
+}
 /* Stacked Table */
 table.tstacked * {
 	box-sizing:border-box;

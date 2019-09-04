@@ -8,9 +8,9 @@
         class="form-control <?= getCssClass('invalid_input')?>"
         type="text" id="search_input" name="search_input"
         value="<?= getValue('selected') ? getValue('selected')['land'] : getParameter('search_input')?>">
-      <!--
-          TODO invalid input
-        -->
+      <div
+        class="<?= getValue('errors')['name'] != null ? 'is-invalid' : 'hidden'?>">
+        Please check your input</div>
     </div>
   </div>
   <div class="row ml-md-1">

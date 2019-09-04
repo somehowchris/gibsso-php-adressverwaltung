@@ -81,15 +81,24 @@ function personen()
     }
     if ($pid ===  null && $count > 0 && $_SERVER['REQUEST_METHOD'] === 'GET' && $_SESSION['new'] !== true) {
         $pid = db_first_person(json_decode($_SESSION['json_search']));
+        if ($pid == null) {
+            unset($_SESSION['json_search']);
+            redirect(__FUNCTION__);
+        }
         $_REQUEST['pid'] = $pid;
         redirect($_SERVER['SCRIPT_NAME']."?id=".__FUNCTION__."&pid=".$pid, false);
     }
     if ($pid !== null && $count > 0) {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $selected = db_select_person($pid);
+            if ($selected == null) {
+                redirect(__FUNCTION__);
+            }
+            setValue('selected', $selected);
+        }
+
         setValue('previous', db_previous_person($pid, json_decode($_SESSION['json_search'])));
         setValue('next', db_next_person($pid, json_decode($_SESSION['json_search'])));
-        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            setValue('selected', db_select_person($pid));
-        }
     }
 
     $_SESSION['new'] = false;
@@ -109,20 +118,35 @@ function edit_ort($origin='')
     if ($oid !== null) {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             setValue('phpmodule', $_SERVER['SCRIPT_NAME']."?id=".__FUNCTION__. ($oid !== null ? "&soid=".$oid : ""));
-            $search = db_select_ort($ort);
+            $search = db_select_ort($oid);
             if (count($search) === 0) {
-                // TODO invalid id message
+                redirect(__FUNCTION__);
             }
             setValue('selected', $search[0]);
         } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (getParameter('save') !== null) {
+                $search = db_select_ort($oid);
+                if (count($search) === 0) {
+                    redirect(__FUNCTION__);
+                }
+                setValue('selected', $search[0]);
                 $name = getParameter('ort');
                 $plz = getParameter('plz');
-                if (isNumber($plz)) {
+                $errors = array();
+                if (!is_string($name) || preg_match('/^[a-zA-ZäöüÄÖÜ \-]{2,}$/', $name) == null) {
+                    $errors['name'] = "Invalid input";
+                }
+
+                if (!(is_string($plz) || is_numeric($plz))) {
+                    $errors['plz'] = "Invalid input";
+                }
+
+                if (count($errors) == 0 && isNumber($oid)) {
                     db_update_ort($oid, $name, $plz);
                     redirect(ort);
                 }
-                // TODO invalid input
+
+                setValue('errors', $errors);
             } elseif (getParameter('delete') !== null) {
                 db_delete_ort($oid);
                 redirect(ort);
@@ -152,13 +176,13 @@ function land()
 {
     $lid = getParameter('slid');
     setValue('phpmodule', $_SERVER['SCRIPT_NAME']."?id=".__FUNCTION__. ($lid !== null ? "&slid=".$lid : ""));
-    if ((getParameter('search_input') != null ? preg_match('/^[a-zA-ZäöüÄÖÜ \-]{2,}$/', getParameter('search_input')) : true)) {
-        if (getParameter('new')) {
-            unset($_REQUEST['search_input']);
-            unset($_REQUEST['slid']);
-            unset($_REQUEST['lid']);
-            redirect(__FUNCTION__);
-        } elseif (getParameter('delete')) {
+    if (getParameter('new')) {
+        unset($_REQUEST['search_input']);
+        unset($_REQUEST['slid']);
+        unset($_REQUEST['lid']);
+        redirect(__FUNCTION__);
+    } elseif ((getParameter('search_input') != null ? preg_match('/^[a-zA-ZäöüÄÖÜ \-]{2,}$/', getParameter('search_input'))  == true : true)) {
+        if (getParameter('delete')) {
             if ($lid !== null) {
                 db_delete_land($lid);
                 unset($_REQUEST['slid']);
@@ -190,9 +214,11 @@ function land()
             }
             setValue('selected', $selected);
         }
+        $_SESSION['search'] = getParameter('search_input');
         return runTemplate("templates/land.htm.php");
     } else {
-        // TODO invalid search message
-        redirect(__FUNCTION__);
+        setValue('data', $_SESSION['search'] !== null ? db_query_land($_SESSION['search']) : db_select_land());
+        setValue('errors', array("name" => "Invalid input"));
+        return runTemplate("templates/land.htm.php");
     }
 }

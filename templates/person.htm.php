@@ -6,7 +6,7 @@
     <div class="col-sm-9">
       <input placeholder="Name"
         class="form-control <?= getCssClass('invalid_input')?>"
-        type="text" id="name" name="name" min="1000"
+        type="text" id="name" name="name"
         value="<?= getParameter('name') != null ? getParameter('name') : (getValue('selected') !== null ? getValue('selected')['name'] : '')?>">
       <!--
           TODO invalid input
@@ -18,7 +18,7 @@
     <div class="col-sm-9">
       <input placeholder="Vorname"
         class="form-control <?= getCssClass('invalid_input')?>"
-        minlength="2" type="text" id="vorname" name="vorname"
+        type="text" id="vorname" name="vorname"
         value="<?= getParameter('vorname') != null ? getParameter('vorname') :(getValue('selected') !== null ? getValue('selected')['vorname'] : '')?>">
       <!--
           // TODO invalid input
@@ -31,7 +31,7 @@
 
       <input placeholder="Strasse"
         class="form-control <?= getCssClass('invalid_input')?>"
-        minlength="2" type="text" id="strasse" name="strasse"
+        type="text" id="strasse" name="strasse"
         value="<?= getParameter('strasse') != null ? getParameter('strasse') :(getValue('selected') !== null ? getValue('selected')['strasse'] : '')?>">
       <!--
       // TODO invalid input
@@ -61,7 +61,7 @@
     <div class="col-sm-9">
       <input placeholder="Mail"
         class="form-control <?= getCssClass('invalid_input')?>"
-        required type="mail" id="mail" name="mail"
+        type="text" id="mail" name="mail"
         value="<?= getParameter('mail') != null ? getParameter('mail') :(getValue('selected') !== null ? getValue('selected')['email'] : '')?>">
       <!--
           // TODO invalid input
@@ -73,8 +73,7 @@
     <div class="col-sm-9">
       <input placeholder="Telefon privat"
         class="form-control <?= getCssClass('invalid_input')?>"
-        type="tel" id="tel-priv" name="tel-priv"
-        pattern="^([\+][0-9]{1,3}([ \.\-])?)?([\(]{1}[0-9]{3}[\)])?([0-9A-Z \.\-]{1,32})((x|ext|extension)?[0-9]{1,4}?)$"
+        type="text" id="tel-priv" name="tel-priv"
         value="<?= getParameter('tel-priv') != null ? getParameter('tel-priv') :(getValue('selected') !== null ? getValue('selected')['tel_priv'] : '')?>">
       <!--
           // TODO invalid input
@@ -86,8 +85,7 @@
     <div class="col-sm-9">
       <input placeholder="Telefon Geschäft"
         class="form-control <?= getCssClass('invalid_input')?>"
-        type="tel" id="tel-comp" name="tel-comp"
-        pattern="^([\+][0-9]{1,3}([ \.\-])?)?([\(]{1}[0-9]{3}[\)])?([0-9A-Z \.\-]{1,32})((x|ext|extension)?[0-9]{1,4}?)$"
+        id="tel-comp" name="tel-comp"
         value="<?= getParameter('tel-comp') != null ? getParameter('tel-comp') :(getValue('selected') !== null ? getValue('selected')['tel_gesch'] : '')?>">
       <!--
           // TODO invalid input
