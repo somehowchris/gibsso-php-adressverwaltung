@@ -1,15 +1,15 @@
 <form name="person"
-  action="<?= getValue('phpmodule'). (getParameter('pid') != null ? '&pid='.getParameter('pid') : '')?>"
+  action="<?= getValue('phpmodule'). (getParameter('pid') !== null ? '&pid='.getParameter('pid') : '')?>"
   method="post">
   <div class="form-group row">
     <label for="name" class="col-sm-3 col-form-label">Name(*)</label>
     <div class="col-sm-9">
       <input placeholder="Name"
-        class="form-control <?= getCssClass('invalid_input')?>"
+        class="form-control <?= getCssClass('invalid_input')?> <?= getValue('errors')['name'] !== null ? 'is-invalid' : '' ?>"
         type="text" id="name" name="name"
-        value="<?= getParameter('name') != null ? getParameter('name') : (getValue('selected') !== null ? getValue('selected')['name'] : '')?>">
+        value="<?= getParameter('name') !== null ? getParameter('name') : (getValue('selected') !== null ? getValue('selected')['name'] : '')?>">
       <div
-        class="<?= getValue('errors')['name'] != null ? 'is-invalid' : 'hidden'?>">
+        class="<?= getValue('errors')['name'] !== null ? 'is-invalid' : 'hidden'?>">
         Please check your input</div>
     </div>
   </div>
@@ -19,7 +19,7 @@
       <input placeholder="Vorname"
         class="form-control <?= getCssClass('invalid_input')?>"
         type="text" id="vorname" name="vorname"
-        value="<?= getParameter('vorname') != null ? getParameter('vorname') :(getValue('selected') !== null ? getValue('selected')['vorname'] : '')?>">
+        value="<?= getParameter('vorname') !== null ? getParameter('vorname') :(getValue('selected') !== null ? getValue('selected')['vorname'] : '')?>">
     </div>
   </div>
   <div class="form-group row">
@@ -29,10 +29,7 @@
       <input placeholder="Strasse"
         class="form-control <?= getCssClass('invalid_input')?>"
         type="text" id="strasse" name="strasse"
-        value="<?= getParameter('strasse') != null ? getParameter('strasse') :(getValue('selected') !== null ? getValue('selected')['strasse'] : '')?>">
-      <!--
-      // TODO invalid input
-      -->
+        value="<?= getParameter('strasse') !== null ? getParameter('strasse') :(getValue('selected') !== null ? getValue('selected')['strasse'] : '')?>">
     </div>
   </div>
   <div class="form-group row">
@@ -41,27 +38,24 @@
       <select class="custom-select custom-select-md" name="ort">
         <option selected disabled>Please choose a town</option>
         <?php
-          if (getValue('data_ort') != null) {
+          if (getValue('data_ort') !== null) {
               foreach (getValue('data_ort') as $ort) {
-                  echo "<option value='".$ort['oid']."' ".(getParameter('ort') != null ? (getParameter('ort') == $ort['oid'] ? 'selected' : '') : (getValue('selected') ? (getValue('selected')['oid'] == $ort['oid'] ? 'selected' : '') : '')).">".$ort['ort']." ".$ort['plz']."</option>";
+                  echo "<option value='".$ort['oid']."' ".(getParameter('ort') !== null ? (getParameter('ort') == $ort['oid'] ? 'selected' : '') : (getValue('selected') ? (getValue('selected')['oid'] == $ort['oid'] ? 'selected' : '') : '')).">".$ort['ort']." ".$ort['plz']."</option>";
               }
           }
         ?>
       </select>
-      <!--
-          // TODO invalid input
-        -->
     </div>
   </div>
   <div class="form-group row">
     <label for="mail" class="col-sm-3 col-form-label">Email(*)</label>
     <div class="col-sm-9">
       <input placeholder="Mail"
-        class="form-control <?= getCssClass('invalid_input')?>"
+        class="form-control <?= getCssClass('invalid_input')?> <?= getValue('errors')['mail'] !== null ? 'is-invalid' : '' ?>"
         type="text" id="mail" name="mail"
-        value="<?= getParameter('mail') != null ? getParameter('mail') :(getValue('selected') !== null ? getValue('selected')['email'] : '')?>">
+        value="<?= getParameter('mail') !== null ? getParameter('mail') :(getValue('selected') !== null ? getValue('selected')['email'] : '')?>">
       <div
-        class="<?= getValue('errors')['mail'] != null ? 'is-invalid' : 'hidden'?>">
+        class="<?= getValue('errors')['mail'] !== null ? 'is-invalid' : 'hidden'?>">
         Invalid email</div>
     </div>
   </div>
@@ -69,11 +63,11 @@
     <label for="tel-priv" class="col-sm-3 col-form-label">Telefon Privat</label>
     <div class="col-sm-9">
       <input placeholder="Telefon privat"
-        class="form-control <?= getCssClass('invalid_input')?>"
+        class="form-control <?= getCssClass('invalid_input')?> <?= getValue('errors')['telPriv'] !== null ? 'is-invalid' : '' ?>"
         type="text" id="tel-priv" name="tel-priv"
-        value="<?= getParameter('tel-priv') != null ? getParameter('tel-priv') :(getValue('selected') !== null ? getValue('selected')['tel_priv'] : '')?>">
+        value="<?= getParameter('tel-priv') !== null ? getParameter('tel-priv') :(getValue('selected') !== null ? getValue('selected')['tel_priv'] : '')?>">
       <div
-        class="<?= getValue('errors')['telPriv'] != null ? 'is-invalid' : 'hidden'?>">
+        class="<?= getValue('errors')['telPriv'] !== null ? 'is-invalid' : 'hidden'?>">
         Invalid phone number</div>
     </div>
   </div>
@@ -81,11 +75,11 @@
     <label for="tel-comp" class="col-sm-3 col-form-label">Telefon Geschäft</label>
     <div class="col-sm-9">
       <input placeholder="Telefon Geschäft"
-        class="form-control <?= getCssClass('invalid_input')?>"
+        class="form-control <?= getCssClass('invalid_input')?> <?= getValue('errors')['telComp'] !== null ? 'is-invalid' : '' ?>"
         id="tel-comp" name="tel-comp"
-        value="<?= getParameter('tel-comp') != null ? getParameter('tel-comp') :(getValue('selected') !== null ? getValue('selected')['tel_gesch'] : '')?>">
+        value="<?= getParameter('tel-comp') !== null ? getParameter('tel-comp') :(getValue('selected') !== null ? getValue('selected')['tel_gesch'] : '')?>">
       <div
-        class="<?= getValue('errors')['telComp'] != null ? 'is-invalid' : 'hidden'?>">
+        class="<?= getValue('errors')['telComp'] !== null ? 'is-invalid' : 'hidden'?>">
         Invalid phone number</div>
     </div>
   </div>
@@ -95,9 +89,9 @@
       <select class="custom-select custom-select-md" name="land">
         <option selected disabled>Please choose a country</option>
         <?php
-          if (getValue('data_land') != null) {
+          if (getValue('data_land') !== null) {
               foreach (getValue('data_land') as $land) {
-                  echo "<option value='".$land['lid']."' ".(getParameter('land') != null ? (getParameter('land') === $land['lid'] ? 'selected' : '') : (getValue('selected') ? (getValue('selected')['lid'] == $land['lid'] ? 'selected' : '') : '')).">".$land['land']."</option>";
+                  echo "<option value='".$land['lid']."' ".(getParameter('land') !== null ? (getParameter('land') === $land['lid'] ? 'selected' : '') : (getValue('selected') ? (getValue('selected')['lid'] == $land['lid'] ? 'selected' : '') : '')).">".$land['land']."</option>";
               }
           }
         ?>
@@ -114,11 +108,11 @@
     <input class="btn btn-outline-secondary mr-sm-1 mb-1 mb-sm-0 col-12 col-sm-auto align-self-start" type="submit"
       name="delete" value="Delete">
     <div class="col-12 col-sm-3 ml-auto" style="padding:0">
-      <a class="btn btn-outline-secondary float-right <?= getValue('next') != null ? '' : 'disabled'?>"
-        role="button" value=">>" style="may-width: 49.43%" <?= getValue('next') != null ? '' : 'disabled'?>
-        href="<?= getValue('next') != null ? getValue('phpmodule').'&pid='.getValue('next')['pid'] : ''?>"
+      <a class="btn btn-outline-secondary float-right <?= getValue('next') !== null ? '' : 'disabled'?>"
+        role="button" value=">>" style="may-width: 49.43%" <?= getValue('next') !== null ? '' : 'disabled'?>
+        href="<?= getValue('next') !== null ? getValue('phpmodule').'&pid='.getValue('next')['pid'] : ''?>"
         >>></a>
-      <a class="btn mr-1 btn-outline-secondary float-sm-right float-left <?= getValue('previous') != null ? '' : 'disabled'?>"
-        role="button" value="<<" style="may-width: 49.43%" <?= getValue('previous') != null ? '' : 'disabled'?>
-        href="<?= getValue('previous') != null ? getValue('phpmodule').'&pid='.getValue('previous')['pid'] : ''?>"
+      <a class="btn mr-1 btn-outline-secondary float-sm-right float-left <?= getValue('previous') !== null ? '' : 'disabled'?>"
+        role="button" value="<<" style="may-width: 49.43%" <?= getValue('previous') !== null ? '' : 'disabled'?>
+        href="<?= getValue('previous') !== null ? getValue('phpmodule').'&pid='.getValue('previous')['pid'] : ''?>"
         ><<</a> </div> </div> </form>

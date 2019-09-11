@@ -138,14 +138,11 @@ function edit_ort($origin='')
                 setValue('selected', $search[0]);
                 $name = getParameter('ort');
                 $plz = getParameter('plz');
-                $errors = array();
-                if (!is_string($name) || preg_match('/^[a-zA-ZäöüÄÖÜ \-]{2,}$/', $name) == null) {
-                    $errors['name'] = "Invalid input";
-                }
 
-                if (!(is_string($plz) || is_numeric($plz))) {
-                    $errors['plz'] = "Invalid input";
-                }
+                $ort = new stdClass();
+                $ort->name = $name;
+                $ort->plz = $plz;
+                $errors = valide_ort($ort);
 
                 if (count($errors) == 0 && isNumber($oid)) {
                     db_update_ort($oid, $name, $plz);
@@ -162,11 +159,16 @@ function edit_ort($origin='')
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = getParameter('ort');
             $plz = getParameter('plz');
-            if (isNumber($plz)) {
+
+            $ort = new stdClass();
+            $ort->name = $name;
+            $ort->plz = $plz;
+            $errors = valide_ort($ort);
+            if ($errors === true) {
                 db_insert_ort($name, $plz);
                 redirect(ort);
             }
-            // TODO invalid message
+            setValue('errors', $errors);
         }
         setValue('phpmodule', $_SERVER['SCRIPT_NAME']."?id=".$origin. ($oid !== null ? "&soid=".$oid : ""));
     }

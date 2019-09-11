@@ -349,3 +349,16 @@ function validate_person($person)
 
     return count($errors) === 0 ? true : $errors;
 }
+
+function valide_ort($ort)
+{
+    $errors = array();
+    if (!is_string($ort->name) || preg_match('/^[a-zA-ZäöüÄÖÜ \-]{2,}$/', $ort->name) == null || strlen($ort->name) == 0) {
+        $errors['name'] = "Invalid input";
+    }
+
+    if (!(is_string($ort->plz) || is_numeric($ort->plz))) {
+        $errors['plz'] = "Invalid input";
+    }
+    return count($errors) === 0 ? true : $errors;
+}

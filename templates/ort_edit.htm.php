@@ -4,12 +4,13 @@
   <div class="form-group row">
     <label for="plz" class="col-sm-2 col-form-label">Plz</label>
     <div class="col-sm-10">
+      <?=getParameter('name')?>
       <input placeholder="Plz"
-        class="form-control <?= getCssClass('invalid_input')?>"
+        class="form-control <?= getCssClass('invalid_input')?> <?= getValue('errors')['plz'] !== null ? 'is-invalid' : '' ?>"
         type="number" id="plz" name="plz" min="1000"
-        value="<?= getParameter('plz') != null ? getParameter('plz') : (getValue('selected') !== null ? getValue('selected')['plz'] : '')?>">
+        value="<?= getParameter('plz') !== null ? getParameter('plz') : (getValue('selected') !== null ? getValue('selected')['plz'] : '')?>">
       <div
-        class="<?= getValue('errors')['plz'] != null ? 'is-invalid' : 'hidden'?>">
+        class="<?= getValue('errors')['plz'] !== null ? 'is-invalid' : 'hidden'?>">
         Please check your input</div>
     </div>
   </div>
@@ -17,11 +18,11 @@
     <label for="ort" class="col-sm-2 col-form-label">Ort(*)</label>
     <div class="col-sm-10">
       <input placeholder="Ort"
-        class="form-control <?= getCssClass('invalid_input')?>"
+        class="form-control <?= getCssClass('invalid_input') ?> <?= getValue('errors')['name'] !== null ? 'is-invalid' : '' ?>"
         minlength="2" type="text" id="ort" name="ort"
-        value="<?= getParameter('ort') != null ? getParameter('ort') : (getValue('selected') !== null ? getValue('selected')['ort'] : '')?>">
+        value="<?= getParameter('ort') !== null ? getParameter('ort') : (getValue('selected') !== null ? getValue('selected')['ort'] : '')?>">
       <div
-        class="<?= getValue('errors')['name'] != null ? 'is-invalid' : 'hidden'?>">
+        class="<?= getValue('errors')['name'] !== null ? 'is-invalid' : 'hidden'?>">
         Please check your input</div>
     </div>
   </div>

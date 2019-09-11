@@ -5,11 +5,11 @@
     <label for="search_input" class="col-sm-2 col-form-label">Land(*)</label>
     <div class="col-sm-10">
       <input placeholder="Search"
-        class="form-control <?= getCssClass('invalid_input')?>"
+        class="form-control <?= getCssClass('invalid_input')?> <?= getValue('errors')['name'] !== null ? 'is-invalid' : '' ?>"
         type="text" id="search_input" name="search_input"
         value="<?= getValue('selected') ? getValue('selected')['land'] : getParameter('search_input')?>">
       <div
-        class="<?= getValue('errors')['name'] != null ? 'is-invalid' : 'hidden'?>">
+        class="<?= getValue('errors')['name'] !== null ? 'is-invalid' : 'hidden'?>">
         Please check your input</div>
     </div>
   </div>
