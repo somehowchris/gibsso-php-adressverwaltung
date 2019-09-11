@@ -8,9 +8,9 @@
         class="form-control <?= getCssClass('invalid_input')?>"
         type="text" id="name" name="name"
         value="<?= getParameter('name') != null ? getParameter('name') : (getValue('selected') !== null ? getValue('selected')['name'] : '')?>">
-      <!--
-          TODO invalid input
-        -->
+      <div
+        class="<?= getValue('errors')['name'] != null ? 'is-invalid' : 'hidden'?>">
+        Please check your input</div>
     </div>
   </div>
   <div class="form-group row">
@@ -20,9 +20,6 @@
         class="form-control <?= getCssClass('invalid_input')?>"
         type="text" id="vorname" name="vorname"
         value="<?= getParameter('vorname') != null ? getParameter('vorname') :(getValue('selected') !== null ? getValue('selected')['vorname'] : '')?>">
-      <!--
-          // TODO invalid input
-        -->
     </div>
   </div>
   <div class="form-group row">
@@ -63,9 +60,9 @@
         class="form-control <?= getCssClass('invalid_input')?>"
         type="text" id="mail" name="mail"
         value="<?= getParameter('mail') != null ? getParameter('mail') :(getValue('selected') !== null ? getValue('selected')['email'] : '')?>">
-      <!--
-          // TODO invalid input
-        -->
+      <div
+        class="<?= getValue('errors')['mail'] != null ? 'is-invalid' : 'hidden'?>">
+        Invalid email</div>
     </div>
   </div>
   <div class="form-group row">
@@ -75,9 +72,9 @@
         class="form-control <?= getCssClass('invalid_input')?>"
         type="text" id="tel-priv" name="tel-priv"
         value="<?= getParameter('tel-priv') != null ? getParameter('tel-priv') :(getValue('selected') !== null ? getValue('selected')['tel_priv'] : '')?>">
-      <!--
-          // TODO invalid input
-        -->
+      <div
+        class="<?= getValue('errors')['telPriv'] != null ? 'is-invalid' : 'hidden'?>">
+        Invalid phone number</div>
     </div>
   </div>
   <div class="form-group row">
@@ -87,9 +84,9 @@
         class="form-control <?= getCssClass('invalid_input')?>"
         id="tel-comp" name="tel-comp"
         value="<?= getParameter('tel-comp') != null ? getParameter('tel-comp') :(getValue('selected') !== null ? getValue('selected')['tel_gesch'] : '')?>">
-      <!--
-          // TODO invalid input
-        -->
+      <div
+        class="<?= getValue('errors')['telComp'] != null ? 'is-invalid' : 'hidden'?>">
+        Invalid phone number</div>
     </div>
   </div>
   <div class="form-group row">
@@ -105,10 +102,6 @@
           }
         ?>
       </select>
-      <!--
-          // TODO invalid input
-          <?= (getValue('selected') !== null ? '' : 'disabled')?>
-      -->
     </div>
   </div>
   <div class="row">

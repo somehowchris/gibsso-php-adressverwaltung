@@ -59,11 +59,15 @@ function personen()
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (getParameter('save')) {
-            if ($pid != null) {
-                db_update_person($pid, $person->name, $person->vorname, $person->strasse, $person->ort, $person->mail, $person->telPriv, $person->telComp, $person->land);
-            } else {
-                $pid = db_insert_person($person->name, $person->vorname, $person->strasse, $person->ort, $person->mail, $person->telPriv, $person->telComp, $person->land);
-                redirect($_SERVER['SCRIPT_NAME']."?id=".__FUNCTION__."&pid=".$pid, false);
+            setValue('errors', validate_person($person));
+            if (getValue('errors') === true) {
+                if ($pid != null) {
+                    db_update_person($pid, $person->name, $person->vorname, $person->strasse, $person->ort, $person->mail, $person->telPriv, $person->telComp, $person->land);
+                } else {
+                    $pid = db_insert_person($person->name, $person->vorname, $person->strasse, $person->ort, $person->mail, $person->telPriv, $person->telComp, $person->land);
+
+                    redirect($_SERVER['SCRIPT_NAME']."?id=".__FUNCTION__."&pid=".$pid, false);
+                }
             }
         } elseif (getParameter('new')) {
             $_SESSION['new'] = true;
@@ -92,10 +96,12 @@ function personen()
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $selected = db_select_person($pid);
             if ($selected == null) {
-                redirect(__FUNCTION__);
+                $pid = db_first_person(json_decode($_SESSION['json_search']));
+                $selected = db_select_person($pid);
             }
             setValue('selected', $selected);
         }
+
 
         setValue('previous', db_previous_person($pid, json_decode($_SESSION['json_search'])));
         setValue('next', db_next_person($pid, json_decode($_SESSION['json_search'])));
@@ -188,7 +194,6 @@ function land()
                 unset($_REQUEST['slid']);
                 redirect(__FUNCTION__);
             }
-            // TODO invalid message
         } elseif (getParameter('save')) {
             if (strlen(stripslashes(getParameter('search_input'))) > 0) {
                 if ($lid !== null) {
@@ -202,7 +207,8 @@ function land()
                     redirect(__FUNCTION__);
                 }
             }
-            // TODO invalid message
+            setValue('errors', array("name" => "Invalid input"));
+            return runTemplate("templates/land.htm.php");
         }
         setValue('data', getParameter('search_input') !== null ? db_query_land(getParameter('search_input')) : db_select_land());
         if ($lid != null) {

@@ -297,6 +297,11 @@ function CheckCleanNumberEmpty($value, $minlength=0)
     }
 }
 
+function checkPhoneNumber($number)
+{
+    return preg_match('/^(((^\+|^0{2})[1-9]{2})|(^0[1-9]{2})) ?[1-9]{1}[\d ]*$/i', $number) == null;
+}
+
 function getParameter(String $name)
 {
     if (isset($_REQUEST[$name])) {
@@ -324,4 +329,23 @@ function intOrNull($param)
 function filterNull($input)
 {
     return $input != null;
+}
+
+function validate_person($person)
+{
+    $errors = array();
+    if (!CheckEmail($person->mail)) {
+        $errors['mail'] = 'Invalid email address';
+    }
+    if ($person->telPriv != null && checkPhoneNumber($person->telPriv)) {
+        $errors['telPriv'] = 'Invalid phone number';
+    }
+    if ($person->telComp != null && checkPhoneNumber($person->telComp)) {
+        $errors['telComp'] = 'Invalid phone number';
+    }
+    if ($person->name == null || strlen($person->name) === 0) {
+        $errors['name'] = 'Invalid name';
+    }
+
+    return count($errors) === 0 ? true : $errors;
 }
